@@ -3,19 +3,48 @@ services:
 
   backend:
     image: node:8.11.2-alpine 
-    container_name: backend
+#    container_name: backend
     volumes:
       - './:/app'
     env_file: env-file.txt
     links:
-      - "redis"
-    command: node /app/index.js
+      - 'redis'
+    command: node /app/index-express.js
     restart: on-failure
     ports:
-      - '3200:3200'
+      - '3000:3000'
+
+  backend2:
+    image: node:8.11.2-alpine
+#    container_name: backend
+    volumes:
+      - './:/app'
+    env_file: env-file.txt
+    links:
+      - 'redis'
+    command: node /app/index-express.js
+    restart: on-failure
+    ports:
+      - '4000:3000'
+
 
   redis:
     image: redis:latest
-    container_name: redis
+#    container_name: redis
     ports:
       - '6379:6379'
+
+  nginx:
+    image: nginx:alpine
+#    container_name: nginx
+    restart: on-failure
+    tty: true
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - './nginxconfigs/conf.d/:/etc/nginx/conf.d/'
+      - './nginxconfigs/nginx.conf:/etc/nginx/nginx.conf'
+    links:
+      - 'backend'
+      - 'backend2'
