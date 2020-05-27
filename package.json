@@ -1,0 +1,16 @@
+{
+  "name": "fer-docker",
+  "version": "1.0.0",
+  "description": "tests",
+  "repository": "acanada",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Javito",
+  "license": "ISC",
+  "dependencies": {
+    "http": "0.0.1-security",
+    "redis": "^3.0.2"
+  }
+}

@@ -1,0 +1,21 @@
+version: '3'
+services:
+
+  backend:
+    image: node:8.11.2-alpine 
+    container_name: backend
+    volumes:
+      - './:/app'
+    env_file: env-file.txt
+    links:
+      - "redis"
+    command: node /app/index.js
+    restart: on-failure
+    ports:
+      - '3200:3200'
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - '6379:6379'
